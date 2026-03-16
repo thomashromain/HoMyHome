@@ -1,0 +1,68 @@
+{
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"layout": {
+			"contentSize": "800px",
+			"wideSize": "1200px"
+		},
+		"color": {
+			"palette": [
+				{
+					"slug": "base",
+					"color": "#ffffff",
+					"name": "White"
+				},
+				{
+					"slug": "contrast",
+					"color": "#000000",
+					"name": "Black"
+				},
+				{
+					"slug": "primary",
+					"color": "#3b82f6",
+					"name": "Blue"
+				}
+			]
+		},
+		"typography": {
+			"fontSizes": [
+				{
+					"slug": "small",
+					"size": "1rem",
+					"name": "Small"
+				},
+				{
+					"slug": "medium",
+					"size": "1.25rem",
+					"name": "Medium"
+				},
+				{
+					"slug": "large",
+					"size": "2rem",
+					"name": "Large"
+				}
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--base)",
+			"text": "var(--wp--preset--color--contrast)"
+		},
+		"typography": {
+			"fontSize": "var(--wp--preset--font-size--medium)",
+			"lineHeight": "1.6"
+		},
+		"elements": {
+			"link": {
+				"color": {
+					"text": "var(--wp--preset--color--primary)"
+				},
+				"typography": {
+					"textDecoration": "none"
+				}
+			}
+		}
+	}
+}

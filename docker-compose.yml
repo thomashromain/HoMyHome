@@ -1,0 +1,30 @@
+services:
+  db:
+    image: mariadb:10.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wp_user
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - homyhome:/var/lib/mysql
+
+  wordpress:
+    build: ./WordPress     
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db
+    volumes:
+      # Map your local theme/plugin folders so changes appear instantly (Hot Reloading)
+      - ./wp-content:/var/www/html/wp-content
+
+volumes:
+  homyhome:
