@@ -3,3 +3,12 @@ Theme Name: Ho My Home Theme
 Author: Thomas ROMAIN
 Version: 0.1
 */
+.wp-block-group:has(> header) {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.wp-block-group:has(> header) > main {
+    flex: 1 1 auto;
+}
