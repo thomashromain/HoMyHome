@@ -9,4 +9,9 @@ if ( ! function_exists( 'mytheme_fonts' ) ) :
 add_action('wp_enqueue_scripts', 'mytheme_fonts');
 endif;
 
+function register_slider_block() {
+    // Note: We point to the 'build' folder, not 'src'
+    register_block_type( __DIR__ . '/image-slider/build' );
+}
+add_action( 'init', 'register_slider_block' );
 

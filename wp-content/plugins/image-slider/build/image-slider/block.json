@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/image-slider",
+  "title": "Image Slider",
+  "category": "widgets",
+  "attributes": {
+    "imgOneUrl": {
+      "type": "string",
+      "default": "https://picsum.photos/id/10/800/450"
+    },
+    "imgTwoUrl": {
+      "type": "string",
+      "default": "https://picsum.photos/id/28/800/450"
+    },
+    "sliderValue": {
+      "type": "number",
+      "default": 50
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}
