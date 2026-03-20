@@ -1,6 +1,5 @@
 # 1. Use the official PHP-FPM or Apache variant
-# 'apache' is standard for ease of use; 'fpm' is better for high-performance scaling.
-FROM wordpress:6.4-apache
+FROM wordpress:latest
 
 # 2. Install system dependencies for common WP features
 # We need these for image manipulation (GD) and ZIP archives.
