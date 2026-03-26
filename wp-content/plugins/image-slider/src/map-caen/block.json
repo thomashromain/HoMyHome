@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "map-caen/map-caen",
+	"version": "0.1.0",
+	"title": "Carte de Caen",
+	"category": "widgets",
+	"icon": "map-alt",
+	"description": "Montre les projets finits",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "map-caen",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+	"attributes": {
+        "markers": {
+            "type": "array",
+            "default": [],
+            "items": {
+                "type": "object"
+            }
+        }
+    }
+}

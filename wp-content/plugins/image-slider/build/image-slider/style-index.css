@@ -1,1 +1,59 @@
-.wp-block-create-block-image-slider{color:#fff;padding:2px}.wp-block-image-slider-visual{aspect-ratio:16/9;display:flex;overflow:hidden;position:relative}.wp-block-image-slider-visual img{height:100%;left:0;-o-object-fit:cover;object-fit:cover;position:absolute;top:0;width:100%}.img-after{clip-path:inset(0 0 0 var(--position))}.slider-input{cursor:ew-resize;height:100%;inset:0;opacity:0;position:absolute;width:100%;z-index:10}.slider-line{background:#fff;bottom:0;box-shadow:0 0 10px rgba(0,0,0,.5);left:var(--position);pointer-events:none;position:absolute;top:0;transform:translateX(-50%);width:4px}
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/image-slider/style.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-create-block-image-slider {
+  color: #fff;
+  padding: 2px;
+}
+
+.wp-block-image-slider-visual {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  aspect-ratio: 16/9;
+}
+
+.wp-block-image-slider-visual img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* The 'After' image is clipped based on the slider value */
+.img-after {
+  clip-path: inset(0 0 0 var(--position));
+}
+
+.slider-input {
+  position: absolute;
+  inset: 0;
+  cursor: ew-resize;
+  opacity: 0; /* Hide the default range input but keep it functional */
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.slider-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--position);
+  width: 4px;
+  background: #fff;
+  pointer-events: none;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/*# sourceMappingURL=style-index.css.map*/

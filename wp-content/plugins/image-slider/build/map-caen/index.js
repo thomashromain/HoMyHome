@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/image-slider/edit.js"
-/*!**********************************!*\
-  !*** ./src/image-slider/edit.js ***!
-  \**********************************/
+/***/ "./src/map-caen/edit.js"
+/*!******************************!*\
+  !*** ./src/map-caen/edit.js ***!
+  \******************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -20,8 +20,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/image-slider/editor.scss");
-
 
 
 
@@ -31,108 +29,116 @@ function Edit({
   setAttributes
 }) {
   const {
-    imgOneUrl,
-    imgTwoUrl,
-    sliderValue
+    markers
   } = attributes;
-  const containerStyle = {
-    position: 'relative',
-    width: '100%',
-    aspectRatio: '16/9',
-    overflow: 'hidden',
-    backgroundColor: '#eee'
+  const addMarker = () => {
+    const newMarkers = [...markers, {
+      title: '',
+      desc: '',
+      slug: '',
+      lat: 49.18,
+      lng: -0.37,
+      address: ''
+    }];
+    setAttributes({
+      markers: newMarkers
+    });
   };
-  const imageStyle = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    userSelect: 'none'
+  const updateMarker = (index, key, value) => {
+    const newMarkers = [...markers];
+    newMarkers[index][key] = value;
+    setAttributes({
+      markers: newMarkers
+    });
+  };
+  const removeMarker = index => {
+    const newMarkers = markers.filter((_, i) => i !== index);
+    setAttributes({
+      markers: newMarkers
+    });
+  };
+
+  // Example Geocoding Function (using Nominatim - Free)
+  const geocodeAddress = async index => {
+    const address = markers[index].address;
+    if (!address) return;
+    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+    const data = await response.json();
+    if (data && data[0]) {
+      updateMarker(index, 'lat', parseFloat(data[0].lat));
+      updateMarker(index, 'lng', parseFloat(data[0].lon));
+    }
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)()
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
-    title: "Slider Settings"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
-    label: "Initial Position",
-    value: sliderValue,
-    onChange: val => setAttributes({
-      sliderValue: val
-    }),
-    min: 0,
-    max: 100
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "slider-container",
-    style: containerStyle
-  }, imgOneUrl && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: imgOneUrl,
-    style: imageStyle,
-    alt: "Before"
-  }), imgTwoUrl && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: imgTwoUrl,
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "map-placeholder"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Dashicon, {
+    icon: "location-alt"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Map centered on Caen. Manage markers in the sidebar.', 'text-domain')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, markers.map((m, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+    key: i
+  }, "\uD83D\uDCCD ", m.title || `Marker ${i + 1}`)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Markers Management', 'text-domain')
+  }, markers.map((marker, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    key: index,
     style: {
-      ...imageStyle,
-      clipPath: `inset(0 0 0 ${sliderValue}%)`
-    },
-    alt: "After"
+      borderBottom: '1px solid #ccc',
+      marginBottom: '10px',
+      paddingBottom: '10px'
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    label: "Title",
+    value: marker.title,
+    onChange: val => updateMarker(index, 'title', val)
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
+    label: "Description",
+    value: marker.desc,
+    onChange: val => updateMarker(index, 'desc', val)
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    label: "Slug (URL Redirect)",
+    value: marker.slug,
+    onChange: val => updateMarker(index, 'slug', val)
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     style: {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: `${sliderValue}%`,
-      width: '4px',
-      background: 'white',
-      transform: 'translateX(-50%)',
-      zIndex: 2,
-      boxShadow: '0 0 10px rgba(0,0,0,0.3)'
-    }
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    style: {
-      marginTop: '10px',
       display: 'flex',
-      gap: '10px'
+      gap: '5px',
+      alignItems: 'flex-end'
     }
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUploadCheck, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
-    onSelect: media => setAttributes({
-      imgOneUrl: media.url
-    }),
-    render: ({
-      open
-    }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
-      isSecondary: true,
-      onClick: open
-    }, "Set Before Image")
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
-    onSelect: media => setAttributes({
-      imgTwoUrl: media.url
-    }),
-    render: ({
-      open
-    }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
-      isSecondary: true,
-      onClick: open
-    }, "Set After Image")
-  }))));
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    label: "Address to Geocode",
+    value: marker.address,
+    onChange: val => updateMarker(index, 'address', val)
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    isSecondary: true,
+    onClick: () => geocodeAddress(index)
+  }, "Find")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    style: {
+      fontSize: '10px'
+    }
+  }, "Coords: ", marker.lat, ", ", marker.lng), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    isDestructive: true,
+    onClick: () => removeMarker(index)
+  }, "Remove"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    isPrimary: true,
+    onClick: addMarker
+  }, "+ Add Marker"))));
 }
 
 /***/ },
 
-/***/ "./src/image-slider/index.js"
-/*!***********************************!*\
-  !*** ./src/image-slider/index.js ***!
-  \***********************************/
+/***/ "./src/map-caen/index.js"
+/*!*******************************!*\
+  !*** ./src/map-caen/index.js ***!
+  \*******************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/image-slider/style.scss");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/image-slider/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./save */ "./src/image-slider/save.js");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/image-slider/block.json");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/map-caen/style.scss");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/map-caen/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./save */ "./src/map-caen/save.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/map-caen/block.json");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
@@ -174,10 +180,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ },
 
-/***/ "./src/image-slider/save.js"
-/*!**********************************!*\
-  !*** ./src/image-slider/save.js ***!
-  \**********************************/
+/***/ "./src/map-caen/save.js"
+/*!******************************!*\
+  !*** ./src/map-caen/save.js ***!
+  \******************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -189,59 +195,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 
+/**
+ * React hook that is used to mark the block wrapper element.
+ * It provides all the necessary props like the class name.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
+ */
+
+
+/**
+ * The save function defines the way in which the different attributes should
+ * be combined into the final markup, which is then serialized by the block
+ * editor into `post_content`.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
+ *
+ * @return {Element} Element to render.
+ */
 
 function save({
   attributes
 }) {
   const {
-    imgOneUrl,
-    imgTwoUrl,
-    sliderValue
+    markers
   } = attributes;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-block-image-slider-visual",
+    className: "caen-map-container",
+    "data-markers": JSON.stringify(markers),
     style: {
-      '--position': `${sliderValue}%`
+      height: '500px'
     }
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: imgOneUrl,
-    className: "img-before",
-    alt: "Before"
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-    src: imgTwoUrl,
-    className: "img-after",
-    alt: "After"
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "range",
-    min: "0",
-    max: "100",
-    value: sliderValue,
-    className: "slider-input"
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "slider-line"
-  })));
+  }));
 }
 
 /***/ },
 
-/***/ "./src/image-slider/editor.scss"
-/*!**************************************!*\
-  !*** ./src/image-slider/editor.scss ***!
-  \**************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ },
-
-/***/ "./src/image-slider/style.scss"
-/*!*************************************!*\
-  !*** ./src/image-slider/style.scss ***!
-  \*************************************/
+/***/ "./src/map-caen/style.scss"
+/*!*********************************!*\
+  !*** ./src/map-caen/style.scss ***!
+  \*********************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -300,13 +294,13 @@ module.exports = window["wp"]["i18n"];
 
 /***/ },
 
-/***/ "./src/image-slider/block.json"
-/*!*************************************!*\
-  !*** ./src/image-slider/block.json ***!
-  \*************************************/
+/***/ "./src/map-caen/block.json"
+/*!*********************************!*\
+  !*** ./src/map-caen/block.json ***!
+  \*********************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/image-slider","title":"Image Slider","category":"widgets","attributes":{"imgOneUrl":{"type":"string","default":"https://picsum.photos/id/10/800/450"},"imgTwoUrl":{"type":"string","default":"https://picsum.photos/id/28/800/450"},"sliderValue":{"type":"number","default":50}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"map-caen/map-caen","version":"0.1.0","title":"Carte de Caen","category":"widgets","icon":"map-alt","description":"Montre les projets finits","example":{},"supports":{"html":false},"textdomain":"map-caen","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"markers":{"type":"array","default":[],"items":{"type":"object"}}}}');
 
 /***/ }
 
@@ -426,8 +420,8 @@ module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/tru
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			"image-slider/index": 0,
-/******/ 			"image-slider/style-index": 0
+/******/ 			"map-caen/index": 0,
+/******/ 			"map-caen/style-index": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -477,7 +471,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/tru
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["image-slider/style-index"], () => (__webpack_require__("./src/image-slider/index.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["map-caen/style-index"], () => (__webpack_require__("./src/map-caen/index.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

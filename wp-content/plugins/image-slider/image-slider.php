@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name:       Image Slider
- * Description:       Example block scaffolded with Create Block tool.
+ * Plugin Name:       Atelier Iris Blocks
+ * Description:       Example blocks scaffolded with Create Block tool.
  * Version:           0.1.0
  * Requires at least: 6.8
  * Requires PHP:      7.4
- * Author:            The WordPress Contributors
+ * Author:            Thomas ROMAIN
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       image-slider
@@ -28,4 +28,11 @@ function create_block_image_slider_block_init() {
     // This looks for the block.json directly inside the build folder
     register_block_type( __DIR__ . '/build/image-slider' );
 }
+function create_block_map() {
+    register_block_type( __DIR__ . '/build/map-caen' );
+}
+
 add_action( 'init', 'create_block_image_slider_block_init' );
+add_action( 'init', 'create_block_map' );
+
+wp_enqueue_style( 'leaflet-css', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' );

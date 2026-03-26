@@ -17,9 +17,10 @@
 	"dependencies": {
 		"@wordpress/block-editor": "latest",
 		"@wordpress/blocks": "latest",
-		"@wordpress/i18n": "latest"
+		"@wordpress/i18n": "latest",
+		"leaflet": "^1.9.4"
 	},
 	"devDependencies": {
-    	"@wordpress/scripts": "^26.0.0" 
+		"@wordpress/scripts": "^26.0.0"
 	}
 }
