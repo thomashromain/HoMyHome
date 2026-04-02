@@ -73,11 +73,11 @@ export default function Edit( { attributes, setAttributes } ) {
                 <MediaUploadCheck>
                     <MediaUpload
                         onSelect={ ( media ) => setAttributes( { imgOneUrl: media.url } ) }
-                        render={ ( { open } ) => <Button isSecondary onClick={ open }>Set Before Image</Button> }
+                        render={ ( { open } ) => <Button isSecondary onClick={ open }>Image Avant</Button> }
                     />
                     <MediaUpload
                         onSelect={ ( media ) => setAttributes( { imgTwoUrl: media.url } ) }
-                        render={ ( { open } ) => <Button isSecondary onClick={ open }>Set After Image</Button> }
+                        render={ ( { open } ) => <Button isSecondary onClick={ open }>Image Aprés</Button> }
                     />
                 </MediaUploadCheck>
             </div>

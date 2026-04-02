@@ -20,9 +20,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
+
+ // Import useSelect to fetch data
+ // Import core store
 
 function Edit({
   attributes,
@@ -31,6 +38,22 @@ function Edit({
   const {
     markers
   } = attributes;
+
+  // 1. Fetch pages from WordPress
+  const pages = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
+    return select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_5__.store).getEntityRecords('postType', 'page', {
+      per_page: -1
+    });
+  }, []);
+
+  // 2. Format pages for the SelectControl
+  const pageOptions = [{
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select a page...', 'map-caen'),
+    value: ''
+  }, ...(pages?.map(page => ({
+    label: page.title.rendered,
+    value: page.link.replace(window.location.origin + '/', '') // Store the relative path (slug)
+  })) || [])];
   const addMarker = () => {
     const newMarkers = [...markers, {
       title: '',
@@ -57,8 +80,6 @@ function Edit({
       markers: newMarkers
     });
   };
-
-  // Example Geocoding Function (using Nominatim - Free)
   const geocodeAddress = async index => {
     const address = markers[index].address;
     if (!address) return;
@@ -79,10 +100,10 @@ function Edit({
     style: {
       color: '#000000'
     }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Carte centré sur Caen. Utiliser le sidebar pour ajouter des markers.', 'text-domain')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, markers.map((m, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Carte centrée sur Caen. Utilisez le sidebar pour ajouter des markers.', 'map-caen')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, markers.map((m, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     key: i
   }, "\uD83D\uDCCD ", m.title || `Marker ${i + 1}`)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Markers Management', 'text-domain')
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Markers Management', 'map-caen')
   }, markers.map((marker, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     key: index,
     style: {
@@ -91,17 +112,19 @@ function Edit({
       paddingBottom: '10px'
     }
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: "Title",
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Title", 'map-caen'),
     value: marker.title,
     onChange: val => updateMarker(index, 'title', val)
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
-    label: "Description",
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Description", 'map-caen'),
     value: marker.desc,
     onChange: val => updateMarker(index, 'desc', val)
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: "Slug (URL Redirect)",
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Link to Page", 'map-caen'),
     value: marker.slug,
-    onChange: val => updateMarker(index, 'slug', val)
+    options: pageOptions,
+    onChange: val => updateMarker(index, 'slug', val),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Choose the page this marker points to", 'map-caen')
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     style: {
       display: 'flex',
@@ -109,23 +132,23 @@ function Edit({
       alignItems: 'flex-end'
     }
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-    label: "Address to Geocode",
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Address to Geocode", 'map-caen'),
     value: marker.address,
     onChange: val => updateMarker(index, 'address', val)
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
     isSecondary: true,
     onClick: () => geocodeAddress(index)
-  }, "Find")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Find", 'map-caen'))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     style: {
       fontSize: '10px'
     }
   }, "Coords: ", marker.lat, ", ", marker.lng), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
     isDestructive: true,
     onClick: () => removeMarker(index)
-  }, "Remove"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Remove", 'map-caen')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
     isPrimary: true,
     onClick: addMarker
-  }, "+ Add Marker"))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("+ Add Marker", 'map-caen')))));
 }
 
 /***/ },
@@ -285,6 +308,26 @@ module.exports = window["wp"]["blocks"];
 (module) {
 
 module.exports = window["wp"]["components"];
+
+/***/ },
+
+/***/ "@wordpress/core-data"
+/*!**********************************!*\
+  !*** external ["wp","coreData"] ***!
+  \**********************************/
+(module) {
+
+module.exports = window["wp"]["coreData"];
+
+/***/ },
+
+/***/ "@wordpress/data"
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+(module) {
+
+module.exports = window["wp"]["data"];
 
 /***/ },
 

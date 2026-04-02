@@ -6,8 +6,13 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-.wp-block-create-block-image-slider {
-  border: 1px dotted #f00;
+.wp-block-create-block-image-slider .components-button {
+  background: #fff !important;
+  border: 1px solid #ccc !important;
+  color: #333 !important;
+}
+.wp-block-create-block-image-slider .components-button:hover {
+  background: #f0f0f0 !important;
 }
 
 /*# sourceMappingURL=index.css.map*/

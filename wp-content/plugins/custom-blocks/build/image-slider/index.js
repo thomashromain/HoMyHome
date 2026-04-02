@@ -104,7 +104,7 @@ function Edit({
     }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
       isSecondary: true,
       onClick: open
-    }, "Set Before Image")
+    }, "Image Avant")
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.MediaUpload, {
     onSelect: media => setAttributes({
       imgTwoUrl: media.url
@@ -114,7 +114,7 @@ function Edit({
     }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
       isSecondary: true,
       onClick: open
-    }, "Set After Image")
+    }, "Image Apr\xE9s")
   }))));
 }
 
