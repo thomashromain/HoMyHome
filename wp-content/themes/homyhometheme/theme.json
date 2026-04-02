@@ -41,41 +41,24 @@
             ]
         },
         "typography": {
-            "fontFamilies": [
-                {
-                    "fontFamily": "\"Caviar Dreams\", sans-serif",
-                    "name": "Caviar Dreams",
-                    "slug": "primary-font"
-                },
-                {
-                    "fontFamily": "\"Hiragino Kaku Gothic\", sans-serif",
-                    "name": "Hiragino Kaku",
-                    "slug": "secondary-font"
-                }
-            ],
-            "fontSizes": [
-                {
-                    "slug": "small",
-                    "size": "0.9rem",
-                    "name": "Petit"
-                },
-                {
-                    "slug": "medium",
-                    "size": "1.1rem",
-                    "name": "Moyen"
-                },
-                {
-                    "slug": "large",
-                    "size": "1.75rem",
-                    "name": "Grand"
-                },
-                {
-                    "slug": "x-large",
-                    "size": "2.5rem",
-                    "name": "Très Grand"
-                }
-            ]
+    "fontFamily": "Caviar Dreams, sans-serif",
+    "name": "Caviar Dreams",
+    "slug": "primary-font",
+    "fontFace": [
+        {
+            "fontFamily": "Caviar Dreams",
+            "fontWeight": "400",
+            "fontStyle": "normal",
+            "src": [ "file:./assets/fonts/CaviarDreams.woff2" ]
+        },
+        {
+            "fontFamily": "Caviar Dreams",
+            "fontWeight": "700",
+            "fontStyle": "normal",
+            "src": [ "file:./assets/fonts/CaviarDreams-Bold.woff2" ]
         }
+    ]
+}
     },
     "styles": {
         "css": ".wp-block-group:has(> header) { min-height:100vh; display:flex; flex-direction:column; } .wp-block-group:has(> header) > main { flex: 1 1 auto; }",

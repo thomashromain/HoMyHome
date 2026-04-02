@@ -1,0 +1,80 @@
+.modular-email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    color: #000; // Text is black
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #000; // Titles above text and black
+        }
+        label:has(+ .email-input[required])::after {
+            content: " *";
+            color: #ff0000; // Red asterisk
+            font-weight: bold;
+        }
+
+        .email-input {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #000000; // Line at the bottom
+            background: transparent; // No initial background
+            padding: 10px 5px;
+            color: #000;
+            transition: background-color 0.3s ease;
+            outline: none;
+
+            // Background becomes white when entering info (focus)
+            &:focus {
+                background-color: #ffffff;
+                border-bottom-color: #000;
+            }
+        }
+        
+        textarea.email-input {
+            min-height: 100px;
+            resize: vertical;
+        }
+    }
+
+    .send-button {
+        width: 100%; // Width of the block
+        height: 60px; // Twice the height of a standard input (approx)
+        background-color: var(--wp--preset--color--vivid-red); // Red
+        color: #ffffff;
+        border: none;
+        border-radius: 33px; // Rounded 33
+        text-align: center; // Text centered
+        cursor: pointer;
+        font-family: inherit; 
+        font-size: inherit;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+
+    .required-indication {
+        font-size: smaller;
+    }
+
+    .required-indication::before {
+        content: "* ";
+        color: #ff0000; // Red asterisk
+        font-weight: bold;
+    }
+
+    .response-msg {
+        text-align: center;
+        margin-top: 10px;
+        min-height: 20px;
+    }
+}
